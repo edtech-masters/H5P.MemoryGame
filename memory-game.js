@@ -124,6 +124,13 @@ H5P.MemoryGame = (function (EventDispatcher, $) {
       completedEvent.data.statement.result.duration = 'PT' + (Math.round(timer.getTime() / 10) / 100) + 'S';
       self.trigger(completedEvent);
 
+       // Create and trigger xAPI event 'answered'
+
+       var completedEventAnswered = self.createXAPIEventTemplate('answered');
+       completedEventAnswered.setScoredResult(1, 1, self, true, true);
+       completedEventAnswered.data.statement.result.duration = 'PT' + (Math.round(timer.getTime() / 10) / 100) + 'S';
+       self.trigger(completedEventAnswered);
+
       if (parameters.behaviour && parameters.behaviour.allowRetry) {
         // Create retry button
         var retryButton = createButton('reset', parameters.l10n.tryAgain || 'Reset', function () {
